@@ -198,58 +198,7 @@ const constantRoutes = [
                         },
 
                     },
-                    {
-                        path: "/logs",
-                        name: "logs",
-                        meta: {
-                            title: "日志管理",
-                            icon: "",
-                            requiresAuth: true,
-                            cache: true,
-                            perms: [
-                                "/sys/logs",
-                            ],
-                        },
-                        children: [
-                            {
-                                path: "/logs/login",
-                                component: () => import("@/views/sys/logs/login/dir-login-logs.vue"),
-                                name: "logs-login",
-                                meta: {
-                                    title: "登录日志",
-                                    icon: "",
-                                    requiresAuth: true,
-                                    cache: true,
-                                    perms: [
-                                        "/sys/logs/list",
-                                        "/sys/logs/create",
-                                        "/sys/logs/delete",
-                                        "/sys/logs/update",
-                                    ],
-                                },
-                            },
-                            {
-                                path: "/logs/opt",
-                                component: () => import("@/views/sys/logs/opt/dir-opt-logs.vue"),
-                                name: "logs-opt",
-                                meta: {
-                                    title: "操作日志",
-                                    icon: "",
-                                    requiresAuth: true,
-                                    cache: true,
-                                    perms: [
-                                        "/sys/logs/list",
-                                        "/sys/logs/create",
-                                        "/sys/logs/delete",
-                                        "/sys/logs/update",
-                                    ],
-                                },
-                            }
-                        ]
-
-                    },
-                ]
-            },
+                    {                        path: "/logs",                        name: "logs",                        meta: {                            title: "日志管理",                            icon: "",                            requiresAuth: true,                            cache: true,                            perms: [                                "/sys/logs",                            ],                        },                        children: [                            {                                path: "/logs/login",                                component: () => import("@/views/sys/logs/login/dir-login-logs.vue"),                                name: "logs-login",                                meta: {                                    title: "登录日志",                                    icon: "",                                    requiresAuth: true,                                    cache: true,                                    perms: [                                        "/sys/logs/list",                                        "/sys/logs/create",                                        "/sys/logs/delete",                                        "/sys/logs/update",                                    ],                                },                            },                            {                                path: "/logs/opt",                                component: () => import("@/views/sys/logs/opt/dir-opt-logs.vue"),                                name: "logs-opt",                                meta: {                                    title: "操作日志",                                    icon: "",                                    requiresAuth: true,                                    cache: true,                                    perms: [                                        "/sys/logs/list",                                        "/sys/logs/create",                                        "/sys/logs/delete",                                        "/sys/logs/update",                                    ],                                },                            }                        ]                    },                    {                        path: "/workflow",                        name: "workflow",                        meta: {                            title: "工作流管理",                            icon: "List",                            requiresAuth: true,                            cache: true,                            perms: [                                "/workflow"                            ],                        },                        children: [                            {                                path: "/workflow/leave-application",                                component: () => import("@/views/workflow/leave-application.vue"),                                name: "leave-application",                                meta: {                                    title: "请假申请",                                    requiresAuth: true,                                    cache: true,                                    perms: [                                        "/workflow/leave-application"                                    ],                                },                            },                            {                                path: "/workflow/task-center",                                component: () => import("@/views/workflow/task-center.vue"),                                name: "task-center",                                meta: {                                    title: "任务中心",                                    requiresAuth: true,                                    cache: true,                                    perms: [                                        "/workflow/task-center"                                    ],                                },                            },                        ]                    },                ]            },
             // {
             //     path: "/frame",
             //     name: 'frame',
@@ -278,21 +227,7 @@ const constantRoutes = [
                     isLink: true
                 },
             },
-            {
-                path: "https://element-plus.org/zh-CN/component/icon.html",
-                name: 'link',
-                meta: {
-                    icon: "Link",
-                    title: 'Element-Plus',
-                    isLink: true
-                },
-            },
-            {
-                path: "/401",
-                name: '401',
-                component: () => import("@/views/sys/error-page/401.vue"),
-                meta: {hidden: true},
-            },
+            {                path: "https://element-plus.org/zh-CN/component/icon.html",                name: 'link',                meta: {                    icon: "Link",                    title: 'Element-Plus',                    isLink: true                },            },            {                path: "/401",                name: '401',                component: () => import("@/views/sys/error-page/401.vue"),                meta: {hidden: true},            },
         ]
     },
     {
