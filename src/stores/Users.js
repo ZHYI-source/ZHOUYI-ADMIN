@@ -10,10 +10,24 @@ import setting from "@/setting.js";
 export const useAuthStore = defineStore('Users', () => {
     let router = useRouter()
 
+    // 用户登录状态
+    const isLoggedIn = ref(false);
+
+    // 初始化用户登录状态
+    const initUserStatus = () => {
+        const token = dbUtils.get('token');
+        const userInfo = dbUtils.get('userInfo');
+        isLoggedIn.value = !!(token && userInfo);
+    };
+
+    // 初始化用户状态
+    initUserStatus();
+
     async function logout() {
         // 执行退出登录逻辑，例如清除用户凭证和重置用户状态等
         dbUtils.clear()
         dbUtils.set('appThemeColor', setting.theme.color)
+        isLoggedIn.value = false;
         // 导航到登录页或其他适当的页面
         await router.replace('/login');
 
@@ -70,6 +84,8 @@ export const useAuthStore = defineStore('Users', () => {
                 "updatedAt": "2024-06-19T02:31:57.708Z"
             }
             await setPerm(roleData.data.perms)
+            // 更新用户登录状态
+            isLoggedIn.value = true;
             // 导航到登录页或其他适当的页面
             await router.push({path: '/'});
             return {...userData.data, ...roleData.data}
@@ -86,6 +102,7 @@ export const useAuthStore = defineStore('Users', () => {
     return {
         logout,
         login,
+        isLoggedIn,
     };
 
 })

@@ -1,6 +1,7 @@
 <script setup>
 
 import {usersList} from "@/api/modules/api.users";
+import {createPermission, updatePermission, deletePermission} from "@/api/system/permission";
 import {TimeUtils} from "utils/util.time";
 import {ZyConfirm, ZyNotification} from "@/utils/util.toast.js";
 import GetPage from "@/views/components/page/get-page.vue";
@@ -1357,12 +1358,17 @@ const goEdit = (row, title,add) => {
 // 删除
 const goDelete = (row) => {
   ZyConfirm('确认删除该条数据？').then(ok => {
-    // ok && fwsbRemove(row.id).then(res => {
-    //   if (res.data) {
-    //     goPage(1)
-    //     ZyNotification.success('删除成功！')
-    //   }
-    // })
+    if (ok) {
+      deletePermission(row._id).then(res => {
+        if (res.data) {
+          goPage(1)
+          ZyNotification.success('删除成功！')
+        }
+      }).catch(error => {
+        console.error('删除权限失败:', error);
+        ZyNotification.error('删除权限失败，请稍后重试');
+      })
+    }
   })
 }
 // 详情

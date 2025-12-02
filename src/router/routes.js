@@ -199,6 +199,42 @@ const constantRoutes = [
 
                     },
                     {
+                        path: "/permissionMatrix",
+                        component: () => import("@/views/sys/permissionMatrix/dir-permissionMatrix.vue"),
+                        name: "permissionMatrix",
+                        meta: {
+                            title: "角色权限矩阵",
+                            icon: "",
+                            requiresAuth: true,
+                            cache: true,
+                            perms: [
+                                "/sys/permissionMatrix/list",
+                                "/sys/permissionMatrix/create",
+                                "/sys/permissionMatrix/delete",
+                                "/sys/permissionMatrix/update",
+                            ],
+                        },
+
+                    },
+                    {
+                        path: "/dataPermission",
+                        component: () => import("@/views/sys/dataPermission/dir-dataPermission.vue"),
+                        name: "dataPermission",
+                        meta: {
+                            title: "数据权限控制",
+                            icon: "",
+                            requiresAuth: true,
+                            cache: true,
+                            perms: [
+                                "/sys/dataPermission/list",
+                                "/sys/dataPermission/create",
+                                "/sys/dataPermission/delete",
+                                "/sys/dataPermission/update",
+                            ],
+                        },
+
+                    },
+                    {
                         path: "/logs",
                         name: "logs",
                         meta: {
@@ -292,6 +328,18 @@ const constantRoutes = [
                 name: '401',
                 component: () => import("@/views/sys/error-page/401.vue"),
                 meta: {hidden: true},
+            },
+            {
+                path: "/permissionTest",
+                name: 'permissionTest',
+                component: () => import("@/views/test/permissionTest.vue"),
+                meta: {
+                    title: '权限管理测试',
+                    requiresAuth: true,
+                    cache: true,
+                    perms: ['test:view'],
+                    dataPermission: 'test'
+                },
             },
         ]
     },

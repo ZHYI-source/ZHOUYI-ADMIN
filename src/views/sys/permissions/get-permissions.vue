@@ -1,5 +1,6 @@
 <script setup>
 import {ZyNotification} from "@/utils/util.toast.js";
+import { createPermission, updatePermission } from "@/api/system/permission";
 
 const ruleFormRef = ref()
 const loading = ref(false)
@@ -26,13 +27,19 @@ const submitForm = (formEl) => {
   if (!formEl) return
   formEl.validate((valid) => {
     if (valid) {
-      /*let FUC = ruleForm.value._id ? 'update' : 'save'
-      FUC(ruleForm.value).then(res => {
-        emits('close', true)
-        ZyNotification.success('操作成功！')
-      })*/
-      emits('close', true)
-      ZyNotification.success('操作成功！')
+      loading.value = true
+      const apiMethod = ruleForm.value._id ? updatePermission : createPermission
+      apiMethod(ruleForm.value).then(res => {
+        if (res.data) {
+          emits('close', true)
+          ZyNotification.success('操作成功！')
+        }
+      }).catch(error => {
+        console.error('保存权限失败:', error)
+        ZyNotification.error('保存权限失败，请稍后重试')
+      }).finally(() => {
+        loading.value = false
+      })
     } else {
       console.log('error submit!')
     }
