@@ -3,6 +3,7 @@ import NProgress from 'nprogress'; // progress bar
 import 'nprogress/nprogress.css'; // progress bar style
 import routes from "./routes";
 import { useSearchStore } from "@/stores/SearchPanel.js";
+import { useDataPermissionStore } from "@/stores/dataPermission.js";
 import dbUtils from "utils/util.strotage.js";
 
 NProgress.configure({ showSpinner: false }); // NProgress Configuration
@@ -33,6 +34,26 @@ function hasPermission(perms, route) {
     }
 }
 
+/**
+ * 检查数据权限
+ * @param {Object} route - 路由对象
+ * @returns {boolean} - 是否具有数据权限
+ */
+function hasDataPermission(route) {
+    const dataPermissionStore = useDataPermissionStore()
+    
+    // 超级管理员跳过数据权限验证
+    const permissionList = dbUtils.get('perms');
+    if (permissionList && permissionList.includes('*')) return true
+    
+    // 如果路由不需要数据权限验证，直接通过
+    if (!route.meta || !route.meta.requireDataPermission) return true
+    
+    // 检查用户是否有数据权限
+    const dataPermission = dataPermissionStore.getDataPermission()
+    return dataPermission.type !== 'NONE'
+}
+
 
 router.beforeEach(async (to, from, next) => {
     const searchStore = useSearchStore()
@@ -59,9 +80,15 @@ router.beforeEach(async (to, from, next) => {
                 return next({name: 'login'});
             }
             const hasRoles = hasPermission(permissionList, to)
-            if (hasRoles) {
+            const hasDataPerm = hasDataPermission(to)
+            if (hasRoles && hasDataPerm) {
                 // 有权限直接访问
                 return next();
+            }
+            if (!hasDataPerm) {
+                NProgress.done();
+                // 无数据权限则重定向到401
+                return next({name: '401'});
             }
             NProgress.done();
             // 无权限则重定向到401

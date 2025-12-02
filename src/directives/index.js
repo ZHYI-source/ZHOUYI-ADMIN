@@ -1,13 +1,15 @@
 import copy from './modules/copy'
 import permission from './modules/permission'
 import debounce from './modules/debounce'
+import dataPermission from './dataPermission'
 
 
 // 自定义指令
 const directives = {
     copy,
     permission,
-    debounce
+    debounce,
+    dataPermission
 };
 
 // 这种写法可以批量注册指令
