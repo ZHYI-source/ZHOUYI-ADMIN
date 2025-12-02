@@ -196,7 +196,36 @@ const constantRoutes = [
                                 "/sys/permissions/update",
                             ],
                         },
-
+                    },
+                    {
+                        path: "/role-permissions",
+                        component: () => import("@/views/sys/role-permissions/role-permissions.vue"),
+                        name: "role-permissions",
+                        meta: {
+                            title: "角色权限矩阵",
+                            icon: "",
+                            requiresAuth: true,
+                            cache: true,
+                            perms: [
+                                "/sys/role-permissions/list",
+                                "/sys/role-permissions/configure",
+                            ],
+                        },
+                    },
+                    {
+                        path: "/data-permissions",
+                        component: () => import("@/views/sys/data-permissions/data-permissions.vue"),
+                        name: "data-permissions",
+                        meta: {
+                            title: "数据权限配置",
+                            icon: "",
+                            requiresAuth: true,
+                            cache: true,
+                            perms: [
+                                "/sys/data-permissions/list",
+                                "/sys/data-permissions/configure",
+                            ],
+                        },
                     },
                     {
                         path: "/logs",
